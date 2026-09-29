@@ -1,0 +1,83 @@
+{
+  "id": "epNN",
+  "title": "RoadieTV — Episode NN: <title>",
+  "status": "draft",
+  "approved_by": "",
+  "note": "Fixed script. Approved ONCE, then rendered to audio and cached. See EPISODE_TEMPLATE.md.",
+  "voice": {
+    "provider": "gemini-tts",
+    "name": "Charon",
+    "style": "measured, dry, confident — a narrator who has been on the road, not an announcer"
+  },
+  "runtime_target_sec": 150,
+  "beats": [
+    {
+      "id": "b1",
+      "cue": "OPEN",
+      "vo": "<~15 seconds of narration>",
+      "grounds": [
+        "sXX"
+      ],
+      "shots": [
+        "<one sentence: subject, place, time of day, state>",
+        "<a DIFFERENT angle or subject — never one clip looping>"
+      ]
+    }
+  ],
+  "interrupt_policy": {
+    "on_interrupt": "Pause the spine, answer from the plan only, then offer to resume.",
+    "reorder": "Remaining beats may be reordered so the ones matching the visitor's subject and intent play next.",
+    "outside_scope": "Relate to an outside example ONLY to explain, then return to the plan. Never introduce a number, partner, date or claim that is not in the source.",
+    "unknown": "Say the plan does not cover it and name who would know. Never invent."
+  },
+  "playback": {
+    "note": "Live TTS on interrupt costs 3-5 seconds of dead air, which breaks the illusion. So every likely pathway is rendered ahead of time and cached. On interrupt we classify intent, pick one to three ATOMS, and play them back to back behind a connector. Answer starts in well under a second. Only a genuinely novel question falls through to live generation — and that result is cached on the way out, so the bank warms as people use it.",
+    "budget_ms": {
+      "connector": 700,
+      "first_atom_start": 900
+    },
+    "fallback": "live",
+    "cache_live_results": true
+  },
+  "connectors": [
+    {
+      "id": "c_ack",
+      "vo": "Good question."
+    },
+    {
+      "id": "c_right",
+      "vo": "Right —"
+    },
+    {
+      "id": "c_fair",
+      "vo": "Fair thing to ask."
+    },
+    {
+      "id": "c_and",
+      "vo": "And there's a second half to that."
+    },
+    {
+      "id": "c_resume",
+      "vo": "Want me to pick the story back up?"
+    },
+    {
+      "id": "c_nope",
+      "vo": "The plan doesn't cover that one, so I won't guess at it."
+    }
+  ],
+  "atoms": [
+    {
+      "id": "a_example",
+      "topic": "<the objection>",
+      "intent": [
+        "<how a person actually says it>",
+        "<another phrasing>"
+      ],
+      "vo": "<a complete answer that stands alone in any order>",
+      "grounds": [
+        "sXX"
+      ]
+    }
+  ],
+  "visual_rules": "Every shot must read as LIVE MUSIC — stage, PA, lighting truss, instruments, crowd or tour trucks visible. Never road construction, never camping or hiking, never generic industry. Two shots per beat, cut between them; never one clip looping."
+}

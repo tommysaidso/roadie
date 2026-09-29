@@ -1,0 +1,16 @@
+import Database from "better-sqlite3";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
+const db = new Database(path.join(path.dirname(fileURLToPath(import.meta.url)), "..", "data", "roadie.db"));
+const bands   = db.prepare("SELECT COUNT(*) n FROM bands").get().n;
+const claimed = db.prepare("SELECT COUNT(*) n FROM venues WHERE user_id IS NOT NULL").get().n;
+const venues  = db.prepare("SELECT COUNT(*) n FROM venues").get().n;
+const slots   = db.prepare("SELECT COUNT(*) n FROM venue_slots").get().n;
+const recent  = db.prepare("SELECT name, home_city, genre, created_at FROM bands ORDER BY id DESC LIMIT 8").all();
+console.log(`Bands registered : ${bands}`);
+console.log(`Venues total     : ${venues}`);
+console.log(`Venues claimed   : ${claimed}`);
+console.log(`Venue slots      : ${slots}`);
+console.log("\nMost recent bands:");
+for (const b of recent) console.log(`  ${b.name} · ${b.home_city} · ${b.genre} · joined ${String(b.created_at||"").slice(0,10)}`);
+db.close();

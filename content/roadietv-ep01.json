@@ -1,0 +1,407 @@
+{
+  "id": "ep01",
+  "title": "RoadieTV — Episode 01: We Bring the Ring",
+  "status": "approved",
+  "approved_by": "Benjamin Easterday",
+  "approved_at": "2026-07-24T16:20:17",
+  "note": "Fixed script. Approved ONCE, then rendered to audio and cached. Live generation happens only when a visitor interrupts — and an interruption may reorder the remaining beats by subject and intent before returning to the spine.",
+  "voice": {
+    "provider": "gemini-tts",
+    "name": "Charon",
+    "style": "measured, dry, confident — a narrator who has been on the road, not an announcer"
+  },
+  "runtime_target_sec": 150,
+  "beats": [
+    {
+      "id": "b1",
+      "cue": "OPEN",
+      "vo": "Most of this country never gets a show. Not because nobody wants one — because nobody can make the math work on a room that seats two hundred, four hours from the last one.",
+      "grounds": [
+        "s01"
+      ],
+      "shots": [
+        "Main street of a small mountain town at dusk, the marquee over a shuttered music hall dark and empty, no one on the sidewalk.",
+        "A two-lane highway running away into empty country at last light, hydro poles marching to the horizon, no headlights in either direction."
+      ]
+    },
+    {
+      "id": "b2",
+      "cue": "THE OLD WAY",
+      "vo": "The old way was to wait. Wait for a venue to have a free Tuesday, wait for a promoter to take a risk, wait for a booking agent to care about a town of four thousand. The whole route was hostage to whoever happened to have a night open.",
+      "grounds": [
+        "s01",
+        "s08"
+      ],
+      "shots": [
+        "A locked stage door at the back of a small club, one bare bulb above it, faded gig posters peeling off the brick beside it.",
+        "The inside of a shut-down music room at night — chairs stacked on tables, an unlit stage at the far end, house lights off."
+      ]
+    },
+    {
+      "id": "b3",
+      "cue": "THE TURN",
+      "vo": "So we stopped waiting for the room. We bring it. Stage, roof, PA, lights, power — the ring rolls into town on a date we set, and the show happens whether or not anybody local puts their hand up.",
+      "grounds": [
+        "s08"
+      ],
+      "shots": [
+        "Two production semi-trailers turning into a wide open field at first light, headlights on, an empty grass expanse ahead of them.",
+        "A concert stage roof being built in an open field at dawn — lighting truss rising on motors, line-array PA stacked to one side, no audience yet."
+      ]
+    },
+    {
+      "id": "b4",
+      "cue": "THE INVERSION",
+      "vo": "That flips who is asking. We announce the route — fairgrounds, rodeo grounds, arena lots, community halls, and yes, venues — and they bid to host it. Ground, power, parking, permits. We score it in the open.",
+      "grounds": [
+        "s08"
+      ],
+      "shots": [
+        "A wide flat fairground at golden hour, entry gates and steel fencing standing empty, grandstand along one edge.",
+        "Rodeo exhibition grounds late in the day, empty bleachers and a broad dirt arena, mountains behind the far fence."
+      ]
+    },
+    {
+      "id": "b5",
+      "cue": "WHY THEY BID",
+      "vo": "And here is the part that makes it move. The date is happening either way. Host it, and that crowd loads in through your gate. Pass, and we are the show in town that night, and you are competing with it. Bidding costs less than an empty room.",
+      "grounds": [
+        "s08"
+      ],
+      "shots": [
+        "A crowd streaming through an entry gate at dusk toward stage lights glowing beyond the fence, tickets in hands.",
+        "A dark quiet shopfront street at night, the glow and haze of a concert lighting up the sky over the rooftops behind it."
+      ]
+    },
+    {
+      "id": "b6",
+      "cue": "THE SCALE",
+      "vo": "The rig scales to the town. Full ring in Kelowna, a pop-up in a rec-ground field somewhere with four thousand people. A small town stops getting no show at all and starts getting one sized to it.",
+      "grounds": [
+        "s04",
+        "s08"
+      ],
+      "shots": [
+        "A full-size festival stage at night, lighting rig blazing over a packed crowd with hands in the air.",
+        "A compact stage rig with PA speakers on a small-town recreation field at dusk, a few hundred people standing close to the front, mountains behind."
+      ]
+    },
+    {
+      "id": "b7",
+      "cue": "WHO GETS PAID",
+      "vo": "Every stop hires local. Transport, load-in, gate, security, cleanup — and a location manager on the ground before the trucks roll. It is all-ages and there is no alcohol anywhere in the ring, which is what makes the permits simple and the partnerships honest.",
+      "grounds": [
+        "s08"
+      ],
+      "shots": [
+        "Local crew in hi-vis rolling black flight cases and amplifier racks down the ramp of a tour trailer under work lights.",
+        "A stagehand coiling XLR cable at the lip of a concert stage, monitor wedges and a drum riser behind, work lights low."
+      ]
+    },
+    {
+      "id": "b8",
+      "cue": "THE BILL",
+      "vo": "The touring bill is the draw. The hometown act is the reason the town shows up — a local band can claim the host slot in its own town, headline or not.",
+      "grounds": [
+        "s08"
+      ],
+      "shots": [
+        "A band lifting guitar cases and an amp out of a pickup truck parked behind an outdoor stage at dusk.",
+        "A local band mid-song on a lit stage, the front rows singing the words back at them."
+      ]
+    },
+    {
+      "id": "b9",
+      "cue": "THIS SHOW",
+      "vo": "And the film unit rides the whole run. The route is a season. Every stop is an episode. You are watching the first one — which is really just us telling you what we are doing before we do it.",
+      "grounds": [
+        "s08"
+      ],
+      "shots": [
+        "A camera operator crouched in the photo pit shooting up at a lit stage, silhouetted against the lighting rig.",
+        "A camera rigged to the tailgate of a truck filming a convoy of production trailers on a highway at sunrise."
+      ]
+    },
+    {
+      "id": "b10",
+      "cue": "CLOSE",
+      "vo": "The system is built. The corridor is drawn. Ask me anything — I will answer out of the plan, and where the plan does not say, I will tell you that instead of guessing.",
+      "grounds": [
+        "s06",
+        "s07"
+      ],
+      "shots": [
+        "A concert site glowing in a dark valley seen wide from a hillside at night, stage lights throwing beams into the sky.",
+        "The lit stage and PA towers of an outdoor show viewed across a full crowd from the very back of the field."
+      ]
+    }
+  ],
+  "interrupt_policy": {
+    "on_interrupt": "Pause the spine, answer from the plan only, then offer to resume.",
+    "reorder": "Remaining beats may be reordered so the ones matching the visitor's subject and intent play next.",
+    "outside_scope": "Relate to an outside example ONLY to explain, then return to the plan. Never introduce a number, partner, date or claim that is not in the source.",
+    "unknown": "Say the plan does not cover it and name who would know. Never invent."
+  },
+  "playback": {
+    "note": "Live TTS on interrupt costs 3-5 seconds of dead air, which breaks the illusion. So every likely pathway is rendered ahead of time and cached. On interrupt we classify intent, pick one to three ATOMS, and play them back to back behind a connector. Answer starts in well under a second. Only a genuinely novel question falls through to live generation — and that result is cached on the way out, so the bank warms as people use it.",
+    "budget_ms": {
+      "connector": 700,
+      "first_atom_start": 900
+    },
+    "fallback": "live",
+    "cache_live_results": true
+  },
+  "connectors": [
+    {
+      "id": "c_ack",
+      "vo": "Good question."
+    },
+    {
+      "id": "c_right",
+      "vo": "Right —"
+    },
+    {
+      "id": "c_fair",
+      "vo": "Fair thing to ask."
+    },
+    {
+      "id": "c_and",
+      "vo": "And there's a second half to that."
+    },
+    {
+      "id": "c_resume",
+      "vo": "Want me to pick the story back up?"
+    },
+    {
+      "id": "c_nope",
+      "vo": "The plan doesn't cover that one, so I won't guess at it."
+    }
+  ],
+  "atoms": [
+    {
+      "id": "a_ask",
+      "topic": "the ask",
+      "intent": [
+        "what do you want",
+        "investment",
+        "ask",
+        "money",
+        "raise"
+      ],
+      "vo": "There are four ways in, and you can start at any of them. Claim corridor properties. Buy a route pool instead of a billboard. Come in as a founding partner. Or fund the outreach push that turns scraped listings into paying members.",
+      "grounds": [
+        "s07"
+      ]
+    },
+    {
+      "id": "a_built",
+      "topic": "is it real",
+      "intent": [
+        "is it built",
+        "deck or product",
+        "does it work",
+        "live",
+        "real"
+      ],
+      "vo": "It is built and running, not a deck. Booking engine, AI matcher, auto-contracts, tour map, border kit, posters, fan capture, a claim flow, an eight-hundred-and-ninety-eight room CRM, and generation on owned hardware. What it needs is fuel, not a first line of code.",
+      "grounds": [
+        "s06"
+      ]
+    },
+    {
+      "id": "a_venue_no",
+      "topic": "venue refuses",
+      "intent": [
+        "what if they say no",
+        "venue refuse",
+        "nobody bids",
+        "no host"
+      ],
+      "vo": "Then the date still happens. That is the whole design. We are not asking permission to exist in that town — we are offering the gate to whoever wants it. If nobody takes it, we are the show that night and the room down the street competes with us.",
+      "grounds": [
+        "s08"
+      ]
+    },
+    {
+      "id": "a_no_alcohol",
+      "topic": "alcohol",
+      "intent": [
+        "why no alcohol",
+        "dry",
+        "all ages",
+        "bar"
+      ],
+      "vo": "No alcohol anywhere in the ring or the vendor midway. It is not a moral position, it is a commercial one. It opens family-brand and public-health sponsorship, it makes municipal permitting simple, and it makes community and First Nations partnerships straightforward instead of delicate.",
+      "grounds": [
+        "s08"
+      ]
+    },
+    {
+      "id": "a_competition",
+      "topic": "competition",
+      "intent": [
+        "competitors",
+        "side door",
+        "who else",
+        "differentiate"
+      ],
+      "vo": "Side Door takes a cut of the door. Prism sells software. Sonicbids charges the artist. None of them fund the tour. We compete for marketing budget — a different buyer, a different line item, and a far larger pool.",
+      "grounds": [
+        "s06"
+      ]
+    },
+    {
+      "id": "a_economics",
+      "topic": "unit economics",
+      "intent": [
+        "how does it pay",
+        "economics",
+        "margin",
+        "revenue",
+        "numbers",
+        "advertising",
+        "ads"
+      ],
+      "vo": "The money comes off advertising. We are a production company that runs a circuit, so we write and shoot commercials for the businesses in the towns we play, run them across the ring, and hand them every file to keep. Our cost of adding a market is almost nothing, which means the whole ring prices below a single town. A station cannot do that. Sponsorship sits underneath it and stays local, a shop backing a band from its own street. Vendor spots and the gate fill in the rest, and the host puts up ground and permits rather than a guarantee, which is what makes a small town affordable to play at all.",
+      "grounds": [
+        "s03",
+        "s05",
+        "s08"
+      ]
+    },
+    {
+      "id": "a_local_hire",
+      "topic": "local hire",
+      "intent": [
+        "jobs",
+        "local",
+        "economic development",
+        "community benefit"
+      ],
+      "vo": "Every stop hires in the town it is in — transport, load-in and out, gate, security, cleanup — and a location manager works the ground before the trucks roll. That is the economic-development line, and it is countable per stop rather than claimed in the abstract.",
+      "grounds": [
+        "s08"
+      ]
+    },
+    {
+      "id": "a_scale",
+      "topic": "scale",
+      "intent": [
+        "how big",
+        "capacity",
+        "small town",
+        "pop up",
+        "footprint"
+      ],
+      "vo": "Same route, different footprint. Full ring where the population carries it, mid and small below that, and a pop-up in a rec-ground field for the towns that would otherwise get nothing. The show is sized to the town instead of the town being disqualified.",
+      "grounds": [
+        "s08"
+      ]
+    },
+    {
+      "id": "a_bands",
+      "topic": "artists",
+      "intent": [
+        "bands",
+        "artists",
+        "who plays",
+        "roster",
+        "talent"
+      ],
+      "vo": "The touring bill is the draw and the hometown act is the reason the town turns out. A local band can claim the host slot for its own town, headline or not, and the bill is built from acts who told us which stops they want and how far they will travel.",
+      "grounds": [
+        "s08"
+      ]
+    },
+    {
+      "id": "a_label",
+      "topic": "label fit",
+      "intent": [
+        "umg",
+        "label",
+        "why us",
+        "partner",
+        "distribution"
+      ],
+      "vo": "A label brings the name that makes the circuit credible. One recognisable act through a corridor town legitimises the whole route, and the acts underneath ride that. We own the infrastructure — the stage, the ground, the crew, the data. That is the half that does not exist yet.",
+      "grounds": [
+        "s07",
+        "s08"
+      ]
+    },
+    {
+      "id": "a_roadietv",
+      "topic": "roadietv",
+      "intent": [
+        "what is roadietv",
+        "is this a tv show",
+        "are you making a show",
+        "is there a series",
+        "what's the documentary",
+        "do you film it",
+        "is this a film",
+        "who watches it",
+        "where does it air",
+        "is it on tv",
+        "show",
+        "series",
+        "film",
+        "documentary",
+        "content"
+      ],
+      "vo": "The film unit is a real department on the run, not a crew we hire for a highlight reel. The route is a season and each stop is an episode. It is a second revenue surface off work the tour is already producing.",
+      "grounds": [
+        "s08"
+      ]
+    },
+    {
+      "id": "a_route",
+      "topic": "the route",
+      "intent": [
+        "where",
+        "geography",
+        "corridor",
+        "which towns",
+        "map"
+      ],
+      "vo": "The interior loop, crossing the BC and Alberta border twice, sold as arcs rather than one indivisible tour. A brand can buy the leg that matches its market instead of the whole country.",
+      "grounds": [
+        "s04"
+      ]
+    },
+    {
+      "id": "a_risk",
+      "topic": "risk",
+      "intent": [
+        "risk",
+        "what could go wrong",
+        "weather",
+        "downside"
+      ],
+      "vo": "The honest risks are weather, permits and the first season's draw in towns with no touring history. Permits are why hosts who handle them score higher. Draw is why the hometown act matters. Weather is why the rig scales and why the calendar sits in summer.",
+      "grounds": [
+        "s08"
+      ]
+    },
+    {
+      "id": "a_advertising",
+      "topic": "advertising",
+      "intent": [
+        "advertising",
+        "can I advertise",
+        "commercial",
+        "ad rates",
+        "sponsor or advertise",
+        "what do I get",
+        "is this sponsorship"
+      ],
+      "vo": "We are not asking anyone to sponsor us. We make your advertising and we run it. Your offer, your words, your people, shot at your own place or on ring night with a real crowd in the room, and you keep every master forever. A sponsor buys a name, so eight towns is not eight times better than one. An advertiser buys customers, so it is. That is why a business can take a whole ring easily, and why it costs less per town than buying one town.",
+      "grounds": [
+        "s03",
+        "s05",
+        "s08"
+      ]
+    }
+  ],
+  "visual_rules": "Every shot must read as LIVE MUSIC — stage, PA, lighting truss, instruments, crowd or tour trucks visible. Never road construction, never camping or hiking, never generic industry. Two shots per beat, cut between them; never one clip looping."
+}

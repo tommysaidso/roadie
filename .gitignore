@@ -1,0 +1,15 @@
+node_modules
+.next
+out
+*.log
+.env
+# All runtime state: SQLite (roadie.db + WAL/SHM), backups, uploaded session audio.
+# (An older entry ignored data/rocky.db - the wrong filename - which let the
+# real DB slip toward commits.)
+data/
+.DS_Store
+data/songart/
+Thumbs.db
+**/Thumbs.db
+tsconfig.tsbuildinfo
+t.txt

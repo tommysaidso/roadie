@@ -1,0 +1,153 @@
+// Auto-contract generator - province-aware plain-language performance agreement.
+// Reference template, not legal advice; venues/bands should review (and for QC,
+// Bill 96 makes a French rendering a real obligation - flagged in the footer).
+import { one, run } from "./db";
+
+// ROADIE events are all-ages and alcohol-free. The permit that matters is the
+// municipal special-event / assembly permit for the ground, not a liquor licence.
+type Prov = { name:string; regulator:string; permit:string; tax:string; frNote?:string };
+const PROVINCES: Record<string, Prov> = {
+  BC: { name:"British Columbia", regulator:"the local government + BC Ministry of Health",
+    permit:"Special-event / temporary-assembly permit obtained by HOST for the ground. Temporary food service at the event requires health-authority notification.",
+    tax:"Applicable GST (5%) to be added where ARTIST is GST-registered." },
+  AB: { name:"Alberta", regulator:"the local municipality + Alberta Health Services",
+    permit:"Municipal special-event permit obtained by HOST. Temporary food vendors require AHS approval.",
+    tax:"Applicable GST (5%) to be added where ARTIST is GST-registered (no PST in Alberta)." },
+  ON: { name:"Ontario", regulator:"the local municipality + local public health unit",
+    permit:"Municipal special-event permit obtained by HOST. Temporary food vendors require public-health approval.",
+    tax:"Applicable HST (13%) to be added where ARTIST is HST-registered." },
+  QC: { name:"Quebec", regulator:"the municipality + MAPAQ",
+    permit:"Municipal public-assembly permit obtained by HOST. Temporary food service requires a MAPAQ permit.",
+    tax:"Applicable GST (5%) + QST (9.975%) to be added where ARTIST is registered. Non-resident artists: Reg 105 withholding may apply.",
+    frNote:"NOTE (Bill 96): contracts in Quebec carry French-language obligations - request the French rendering of this agreement before signing." },
+  SK: { name:"Saskatchewan", regulator:"the local municipality + Saskatchewan Health Authority",
+    permit:"Municipal special-event permit obtained by HOST; temporary food service requires health approval.",
+    tax:"Applicable GST (5%) + PST (6%) where registered." },
+  MB: { name:"Manitoba", regulator:"the local municipality + Manitoba Health",
+    permit:"Municipal special-event permit obtained by HOST; temporary food service requires health approval.",
+    tax:"Applicable GST (5%) + RST (7%) where registered." },
+  NS: { name:"Nova Scotia", regulator:"the local municipality + NS Environment",
+    permit:"Municipal special-event permit obtained by HOST; temporary food service requires health approval.",
+    tax:"Applicable HST (15%) where registered." },
+  NB: { name:"New Brunswick", regulator:"the local municipality + NB Health",
+    permit:"Municipal special-event permit obtained by HOST; temporary food service requires health approval.",
+    tax:"Applicable HST (15%) where registered." },
+};
+const fallbackProv = (code:string): Prov => PROVINCES[code] || {
+  name: code || "Canada", regulator: "the local municipality and health authority",
+  permit: "Special-event / assembly permit obtained by HOST for the ground; confirm temporary food-service requirements with the local health authority.",
+  tax: "Applicable GST/HST to be added where ARTIST is registered.",
+};
+
+export function generateContract(bookingId:number): string {
+  const bk:any = one("SELECT * FROM bookings WHERE id=?", bookingId);
+  if (!bk) return "";
+  const band:any = one("SELECT * FROM bands WHERE id=?", bk.band_id);
+  const stop:any = bk.stop_id ? one("SELECT * FROM stops WHERE id=?", bk.stop_id) : null;
+  const venue:any = bk.venue_id ? one("SELECT * FROM venues WHERE id=?", bk.venue_id) : null;
+  const fee = bk.guarantee ?? 0;
+  const region = stop?.region || venue?.region || "BC";
+  const isLicensed = !!(venue?.notes?.includes("· licensed") || venue?.pay_model === "bar_split");
+  const p = fallbackProv(region);
+  const bandLoc = [band?.home_city, band?.home_region || region].filter(Boolean).join(", ");
+
+  // A ROADIE stop means we bring the ring, the stage and the PA. A venue night
+  // means the room supplies its own. PRESENTER is ROADIE either way.
+  const onRing = !!stop && stop.site_kind !== "venue";
+  const siteName = stop?.site_name || venue?.name || "TBC";
+  const siteLoc = [stop?.city || venue?.city, region].filter(Boolean).join(", ");
+  const production = onRing
+    ? "PRESENTER supplies the stage, roof, PA, monitors, lighting and power."
+    : `HOST provides: ${venue?.backline || "PA"}.`;
+
+  // Ring-model floor. The plan sets CA$3,000/night as the minimum guarantee;
+  // individual bookings may be higher (headliner, special event). If the stored
+  // guarantee is below floor, the shortfall is covered from sponsor escrow.
+  const FLOOR = 3000;
+  const belowFloor = onRing && fee > 0 && fee < FLOOR;
+
+  const body = `LIVE PERFORMANCE AGREEMENT (${p.name})
+Generated by ROADIE - review before signing. Not legal advice.
+
+THIS AGREEMENT is made for the engagement described below.
+
+ARTIST:    ${band?.name} (${bandLoc})
+PRESENTER: ROADIE${stop?.route_id ? ` - route stop #${stop.seq ?? ""}`.trimEnd() : ""}
+SITE:      ${siteName} (${siteLoc})${onRing ? ` - ${String(stop.site_kind || "roadie_ring").replace(/_/g," ")}` : ""}
+DATE:      ${bk.date}
+BILLING:   ${String(bk.bill_position || "support").replace(/_/g," ")}
+LOAD-IN: 2 hours before gates  -  SOUNDCHECK: on load-in
+PERFORMANCE: one set, length by mutual agreement (typ. 45-75 min).
+
+1. COMPENSATION — REVENUE SPLIT${onRing ? ` (ROADIE ring model)` : ""}
+${onRing ? `\
+   The ring operates on a three-party door split applied to gross gate receipts:
+
+     60%  ARTIST  — performance fee
+     25%  HOST    — host-venue door share
+     15%  ROADIE  — platform, production & routing fee
+
+   ARTIST guarantee this engagement: CAD $${fee}${belowFloor ? `\n   NOTE: guarantee is below the ring floor of CA$${FLOOR}. PRESENTER will cover\n   the shortfall from sponsor escrow before ring departure (see Section 2).` : ""}
+   Ring floor guarantee: CA$${FLOOR} minimum — ARTIST receives the greater of
+   the stated guarantee or the floor, regardless of gate performance.
+   ${p.tax}` : `\
+   Guarantee: CAD $${fee} payable to ARTIST on the night of performance.
+   ${p.tax}`}
+
+2. ESCROW & SPONSOR FUNDING${onRing ? "" : " (not applicable — venue engagement)"}
+${onRing ? `\
+   PRESENTER holds the ARTIST guarantee in escrow funded by ring sponsors
+   before the ring departs its first stop. This guarantee is not contingent
+   on gate performance — it is paid to ARTIST regardless of attendance.
+
+   Sponsor escrow is managed by UARX MIXEDREALITY CORP. (federal #1695020-5),
+   South Hazelton, BC, acting as production entity for this ring.
+
+   ARTIST acknowledges that the payment mechanism (escrow account or wire)
+   will be confirmed in a written addendum prior to ring departure. This clause
+   is operative and binding; the payment instrument is administrative.` : `\
+   No escrow applies to this engagement. Payment is settled on the night\n   per Section 7.`}
+
+3. PRODUCTION / BACKLINE
+   ${production}
+   ARTIST provides: instruments and personal gear.
+
+4. EVENT POLICY — ALL AGES
+   This is an all-ages event. ARTIST agrees the performance, stage patter
+   and merchandise suit an all-ages, family-friendly audience.${
+     isLicensed
+       ? "\n   Alcohol service, if any, is subject solely to HOST's liquor licence\n   and local bylaw. HOST is solely responsible for all licence compliance."
+       : "\n   No alcohol is sold, served or permitted in the event or vendor area\n   (outdoor ring / community ground — no liquor licence applies here)."
+   }
+
+5. SITE PERMITS (${p.regulator})
+   ${p.permit}
+
+6. NOISE / CURFEW
+   ARTIST agrees to amplified-sound curfew per local bylaw and PRESENTER direction.${stop?.curfew ? `\n   Curfew this stop: ${stop.curfew}.` : ""}
+
+7. CANCELLATION
+   Either party may cancel with 14 days' notice. Cancellation inside 14 days:
+   the cancelling party pays 50% of the guarantee, except for force majeure.
+   For ring cancellation: if PRESENTER cancels the ring, the full escrowed
+   guarantee is released to ARTIST within 5 business days.
+
+8. SETTLEMENT
+${onRing ? `\
+   (a) ARTIST receives the guarantee (CAD $${fee < FLOOR ? FLOOR : fee}) from escrow at end of night.
+   (b) Gate receipts above the guarantee floor are split:
+         60% ARTIST  /  25% HOST  (after 15% ROADIE platform fee from gross)
+   (c) Final accounting provided to all parties within 5 business days of the event.
+   (d) HOST reconciles door count with PRESENTER representative on the night.` : `\
+   Settlement at end of night. Door splits (if any) reconciled against HOST count.`}
+${p.frNote ? "\n" + p.frNote + "\n" : ""}
+SIGNATURES
+   ARTIST:    ____________________   DATE: __________
+   HOST:      ____________________   DATE: __________
+   PRESENTER: ____________________   DATE: __________
+`;
+  run("INSERT INTO contracts(booking_id,body,jurisdiction,status) VALUES(?,?,?,?)", bookingId, body, region, "draft");
+  const cid = one<any>("SELECT id FROM contracts WHERE booking_id=? ORDER BY id DESC LIMIT 1", bookingId)?.id;
+  if (cid) run("UPDATE bookings SET contract_id=?, status='contract_sent' WHERE id=?", cid, bookingId);
+  return body;
+}

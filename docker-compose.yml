@@ -1,0 +1,39 @@
+# Run ROADIE next to mymymy and publish it on the mymymy domain via Cloudflare tunnel.
+#
+#   docker compose up --build -d
+#
+# The mymymy Cloudflare tunnel runs in the main mymymy compose project. ROADIE
+# joins that project's shared network so tunnel ingress can resolve:
+#   roadie.mymymy.studio -> http://roadie-web:3001
+
+services:
+  roadie:
+    build: .
+    container_name: roadie-web
+    restart: unless-stopped
+    env_file: [.env]
+    environment:
+      ROADIE_PORT: "3001"
+      MYMYMY_API_URL: "https://app.mymymy.studio"
+    ports:
+      - "3001:3001"
+    volumes:
+      - ./data:/app/data            # persist the SQLite catalog/cache
+    networks:
+      - default
+      - mymymy_tunnel
+
+  # Optional: dedicate a tunnel connector to ROADIE (reuses your CLOUDFLARED_TOKEN).
+  # Leave commented if you'd rather add the public hostname to the existing mymymy tunnel.
+  # cloudflared:
+  #   image: cloudflare/cloudflared:latest
+  #   container_name: roadie-cloudflared
+  #   restart: unless-stopped
+  #   network_mode: host
+  #   command: tunnel --no-autoupdate run --token ${CLOUDFLARED_TOKEN}
+  #   depends_on: [roadie]
+
+networks:
+  mymymy_tunnel:
+    external: true
+    name: mymymy_default
