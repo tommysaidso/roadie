@@ -1,10 +1,9 @@
 import { all } from "@/lib/db";
 import { Page } from "@/components/ui";
 import PromoBanner from "@/components/PromoBanner";
-import BCMap from "@/components/BCMap";
 import { cookies } from "next/headers";
 import { getHub, hubLoop } from "@/lib/hubs";
-import GoogleMap from "@/components/GoogleMap";
+import MapModes from "@/components/MapModes";
 export const dynamic = "force-dynamic";
 export default async function MapPage(){
   const c = await cookies();
@@ -15,10 +14,10 @@ export default async function MapPage(){
   const stops = order.map((c,i)=>{ const v=venues.find((x:any)=>x.city===c); return v?{seq:i,city:c,lat:v.lat,lng:v.lng}:null; }).filter(Boolean);
   const gkey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || "";
   return (
-    <Page title="Tour Map" sub={`Plot the run. The dashed line is ROADIE's suggested ${hub.name} runout. With a Google Maps key it's a live map; without one it falls back to the offline view.`}>
-      {gkey
-        ? <GoogleMap apiKey={gkey} venues={venues} bands={bands} stops={stops as any} center={{lat:hub.center_lat,lng:hub.center_lng}} zoom={hub.default_zoom}/>
-        : <BCMap venues={venues} bands={bands} stops={stops as any} box={{minLng:hub.bbox_min_lng,maxLng:hub.bbox_max_lng,minLat:hub.bbox_min_lat,maxLat:hub.bbox_max_lat}}/>}
+    <Page title="Tour Map" sub={`Plot the run. The dashed line is ROADIE's suggested ${hub.name} runout. The 3D map shows the whole region at once; switch to the flat map for hotels, gas and drive times.`}>
+      <MapModes cesiumToken={process.env.NEXT_PUBLIC_CESIUM_TOKEN || ""} googleKey={gkey} venues={venues} bands={bands} stops={stops as any}
+        center={{lat:hub.center_lat,lng:hub.center_lng}} zoom={hub.default_zoom}
+        box={{minLng:hub.bbox_min_lng,maxLng:hub.bbox_max_lng,minLat:hub.bbox_min_lat,maxLat:hub.bbox_max_lat}}/>
       <div className="card p-4 mt-4">
         <div className="label mb-2">Suggested runout — {hub.name}</div>
         <div className="text-sm text-muted">{(stops as any).map((s:any)=>s.city).join("  →  ")} — tap venue pins on the map for real drive times.{gkey?"":" Add NEXT_PUBLIC_GOOGLE_MAPS_API_KEY for the live Google map + drive-time routing."}</div>
