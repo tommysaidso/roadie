@@ -36,9 +36,10 @@ forty-eight communities, the places national tours and national campaigns both
 drive past.
 
 Here is what I am offering, plainly. We roll into each of those towns with a band
-and a camera crew. While we are there, we write and shoot a commercial for a local
-business — one take, their counter, their staff, their words. We hand them the
-master to keep.
+and a camera crew. We sit down with the locals, the people who are proud of the
+place, and film their stories alongside the band's. While we are there, we shoot
+your commercial in that community's own backyard, built around the story or theme
+you want to carry in that market. We hand you the master to keep.
 
 I am looking for one company to take the whole network for two seasons. That gets
 you forty-eight finished commercials for your locations in the markets those
@@ -53,8 +54,12 @@ shown up in forty-eight communities. That is a position competitors cannot buy b
 from you later.
 
 There is also a television series being cut from the same footage, which is how we
-can do this at that price — the crew is already there. Two seasons, sixteen hours.
-Your commercials run inside it, in market.
+can do this at that price — the crew is already there. One roll gives four pieces:
+the documentary series, the band's music video, your commercial, and Local Jams,
+which keeps each town playing after we leave. Two seasons, sixteen hours. Your
+commercials run inside it, in market.
+
+When we leave, you are still there: the brand that brought live music back to town.
 
 If it is worth twenty minutes I will walk you through the routes and the numbers.
 If the whole network is too big a first step, we do one route for CA$150,000 and you
