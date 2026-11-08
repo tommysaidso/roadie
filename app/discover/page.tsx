@@ -2,6 +2,7 @@ import { all } from "@/lib/db";
 import { Page } from "@/components/ui";
 import PromoBanner from "@/components/PromoBanner";
 import { PlayCircle, MapPin } from "lucide-react";
+export const metadata = { title: "Discover", alternates: { canonical: "/discover" } };
 export const dynamic = "force-dynamic";
 
 function Tile({ b, w }:{ b:any; w?:any }){

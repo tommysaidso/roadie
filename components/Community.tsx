@@ -87,7 +87,7 @@ export default function Community(){
             <div className="flex items-center justify-between"><div className="font-bold">{p.name}</div>{p.member_status==="sample"&&<span className="pill">sample</span>}</div>
             <div className="text-sm text-muted">{p.headline}</div>
             <div className="text-xs text-muted flex items-center gap-2 mt-1"><Globe size={11}/>{p.country}{p.city?` · ${p.city}`:""}{p.remote?" · remote":""}</div>
-            <div className="mt-2">{(p.tags||"").split(",").filter(Boolean).map((t:string)=><span key={t} className="pill mr-1 mb-1 inline-block">{t}</span>)}</div>
+            <div className="mt-2">{(p.tags||"").split(",").filter(Boolean).map((t:string)=><span key={t}><span className="pill mr-1 mb-1 inline-block">{t.trim().replace(/_/g," ")}</span>{" "}</span>)}</div>
             {proContactHref(p.links)&&<a href={proContactHref(p.links)!} target="_blank" rel="noopener" className="mt-2 flex items-center gap-1 text-xs text-cyan hover:underline"><ExternalLink size={11}/>{proContactLabel(p.links)}</a>}
           </div>
         ))}

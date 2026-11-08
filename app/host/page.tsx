@@ -2,6 +2,7 @@ import { all } from "@/lib/db";
 import { Page } from "@/components/ui";
 import HostBidForm from "@/components/HostBidForm";
 import { ensureRingSchema } from "@/lib/ring";
+export const metadata = { title: "Host the Ring", alternates: { canonical: "/host" } };
 export const dynamic = "force-dynamic";
 
 export default function Host() {

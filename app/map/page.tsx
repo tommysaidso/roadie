@@ -4,6 +4,7 @@ import PromoBanner from "@/components/PromoBanner";
 import { cookies } from "next/headers";
 import { getHub, hubLoop } from "@/lib/hubs";
 import MapModes from "@/components/MapModes";
+export const metadata = { title: "Tour Map", alternates: { canonical: "/map" } };
 export const dynamic = "force-dynamic";
 export default async function MapPage(){
   const c = await cookies();

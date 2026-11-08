@@ -1,6 +1,7 @@
 import { all } from "@/lib/db";
 import { Page } from "@/components/ui";
 import CrossingExplorer from "@/components/CrossingExplorer";
+export const metadata = { title: "Border & Visas — touring across CA · US · MX", alternates: { canonical: "/crossing" } };
 export const dynamic = "force-dynamic";
 
 const FLAG:any={CA:"🇨🇦",US:"🇺🇸",MX:"🇲🇽"};

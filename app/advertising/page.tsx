@@ -3,6 +3,7 @@ import Link from "next/link";
 import { AD_PRODUCTS, AD_PITCH_LINE, AD_VS_SPONSOR, RING_SPINE, LOCAL_SPONSOR } from "@/lib/advertising";
 import { Video, Clapperboard, Radio, Layers, Check, ArrowRight, Heart } from "lucide-react";
 import { RoadieVendorTour, WalkMeThrough } from "@/components/RoadieTour";
+export const metadata = { title: "Advertising", alternates: { canonical: "/advertising" } };
 
 export const dynamic = "force-dynamic";
 

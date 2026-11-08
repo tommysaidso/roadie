@@ -8,6 +8,7 @@ import {
   Guitar, BedDouble, Truck, UtensilsCrossed, ShoppingBag, Tent, Backpack,
   Star, Globe, Map, MapPin, Building2,
 } from "lucide-react";
+export const metadata = { title: "Sponsors & Partners", alternates: { canonical: "/sponsors" } };
 export const dynamic = "force-dynamic";
 
 const KIND_ICON: Record<string, any> = {

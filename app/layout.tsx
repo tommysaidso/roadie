@@ -3,8 +3,13 @@ import type { Metadata, Viewport } from "next";
 import Shell from "../components/Shell";
 import { ensureProfileSchema } from "@/lib/profiles";
 
+// The public address, so share images and links resolve to the real site rather
+// than the container's own localhost (Google and Facebook showed no image).
+const SITE = process.env.NEXT_PUBLIC_SITE_URL || "https://roadie.mymymy.studio";
+
 export const metadata: Metadata = {
-  title: "ROADIE — the band's road kit",
+  metadataBase: new URL(SITE),
+  title: { default: "ROADIE — the band's road kit", template: "%s · ROADIE" },
   description: "Community, venues, AI booking, tour map and sponsors for Canadian bands. Front-of-house to mymymy.",
   appleWebApp: { capable: true, statusBarStyle: "black-translucent", title: "ROADIE" },
   openGraph: {

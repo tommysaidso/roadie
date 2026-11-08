@@ -1,5 +1,6 @@
 import { Page } from "@/components/ui";
 import { regionList } from "@/lib/regions";
+export const metadata = { title: "Regions & Laws", alternates: { canonical: "/regions" } };
 export const dynamic="force-dynamic";
 const FLAG:any={CA:"🇨🇦",US:"🇺🇸"};
 export default function Regions(){

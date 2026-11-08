@@ -3,6 +3,7 @@ import { CurrencyToggle, Money } from "@/components/Currency";
 import MembershipTiers from "@/components/MembershipTiers";
 import PromoBanner from "@/components/PromoBanner";
 import { Check } from "lucide-react";
+export const metadata = { title: "Membership", alternates: { canonical: "/membership" } };
 export const dynamic = "force-dynamic";
 
 const FALLBACK = [

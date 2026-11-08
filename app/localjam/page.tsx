@@ -2,6 +2,7 @@ import { Page } from "@/components/ui";
 import Link from "next/link";
 import { Music, QrCode, Users, Volume2 } from "lucide-react";
 import { LJ_LOCATIONS } from "@/lib/localjam";
+export const metadata = { title: "LocalJams", alternates: { canonical: "/localjam" } };
 export const dynamic = "force-dynamic";
 
 // LOCALJAM index — every town on one template, independent data each.

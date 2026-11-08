@@ -1,6 +1,7 @@
 import { Page } from "@/components/ui";
 import TheWire from "@/components/TheWire";
 import WireStations from "@/components/WireStations";
+export const metadata = { title: "The Wire", alternates: { canonical: "/wire" } };
 
 export const dynamic = "force-dynamic";
 

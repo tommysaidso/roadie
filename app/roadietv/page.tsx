@@ -2,6 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { Page } from "@/components/ui";
 import EpisodePlayer from "@/components/EpisodePlayer";
+export const metadata = { title: "RoadieTV", alternates: { canonical: "/roadietv" } };
 export const dynamic = "force-dynamic";
 
 export default function RoadieTVPage() {

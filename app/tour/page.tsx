@@ -4,6 +4,7 @@ import { Page } from "@/components/ui";
 import TourWorkspace from "@/components/TourWorkspace";
 import { ensureRingSchema } from "@/lib/ring";
 import { getHub } from "@/lib/hubs";
+export const metadata = { title: "Tour", alternates: { canonical: "/tour" } };
 export const dynamic = "force-dynamic";
 
 // One Tour surface.

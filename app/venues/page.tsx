@@ -8,6 +8,7 @@ import VenueBrowser from "@/components/VenueBrowser";
 import HubMap from "@/components/HubMap";
 import { ensureVenueCalendarSchema } from "@/lib/ics";
 import { getHub, hubLoop } from "@/lib/hubs";
+export const metadata = { title: "Host Sites", alternates: { canonical: "/venues" } };
 export const dynamic = "force-dynamic";
 
 export default async function Venues() {

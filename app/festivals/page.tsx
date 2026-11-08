@@ -1,5 +1,6 @@
 import { Page } from "@/components/ui";
 import Festivals from "@/components/Festivals";
+export const metadata = { title: "Festivals", alternates: { canonical: "/festivals" } };
 export const dynamic="force-dynamic";
 export default function FestivalsPage(){
   return (

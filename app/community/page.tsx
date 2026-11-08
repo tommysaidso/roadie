@@ -6,7 +6,14 @@ import PromoBanner from "@/components/PromoBanner";
 import SparkForm from "@/components/SparkForm";
 import ReactButton from "@/components/ReactButton";
 import { MapPin, ExternalLink } from "lucide-react";
+import type { Metadata } from "next";
 export const dynamic = "force-dynamic";
+
+export const metadata: Metadata = {
+  title: "Community: bands, rooms and pros",
+  description: "Everyone on ROADIE: the bands, the rooms and grounds that host them, and the pros who keep them working. Post a need and get matched by skill and area.",
+  alternates: { canonical: "/community" },
+};
 
 export default function CommunityPage() {
   const bandCount = Number((one<any>("SELECT COUNT(*) n FROM bands") || {}).n || 0);
