@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { all, run } from "@/lib/db";
 import { requireUser } from "@/lib/guard";
+import { listVendors } from "@/lib/vendorPage";
 export const dynamic="force-dynamic";
 // Explicit member rank: lifetime members first, samples last. (A bare string
 // DESC sort put "sample" above "lifetime_free" and buried Mose at the bottom.)
@@ -12,7 +13,9 @@ export async function GET(req:NextRequest){
   const COLS = "id,name,headline,kind,tags,city,region,country,remote,bio,links,member_status,hours,website,year_est,services";
   const rows= tag? all(`SELECT ${COLS} FROM pros WHERE (','||lower(replace(tags,' ',''))||',') LIKE ? ORDER BY `+RANK+", name", `%,${tag},%`)
                  : all(`SELECT ${COLS} FROM pros ORDER BY `+RANK+", name");
-  return NextResponse.json({ pros: rows });
+  // Pros with a vendor page (content/vendors/*.json, keyed by pro_id) link to it from Community.
+  const pages = new Map(listVendors().filter(v => v.pro_id).map(v => [Number(v.pro_id), v.slug]));
+  return NextResponse.json({ pros: (rows as any[]).map(r => (pages.has(r.id) ? { ...r, vendor_page: `/vendors/${pages.get(r.id)}` } : r)) });
 }
 export async function POST(req:NextRequest){
   const g = requireUser(req); if (g.deny) return g.deny;

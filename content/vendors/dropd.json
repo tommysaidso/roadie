@@ -1,0 +1,85 @@
+{
+  "slug": "dropd",
+  "pro_id": 4,
+  "name": "Drop D Music",
+  "owner": "Dewey",
+  "city": "Kelowna, BC",
+  "place": "Kelowna, BC &middot; Okanagan",
+  "word1": "DROP D",
+  "word2": "MUSIC",
+  "tagline": "Dependable instruments at prices you can afford.",
+  "member_label": "Free member vendor",
+  "member_note": "Drop D is on ROADIE as a free member vendor.",
+  "images": {
+    "bg": "/vendors/dropd/bg.jpg",
+    "hero": "/vendors/dropd/hero.jpg",
+    "mark": "/vendors/dropd/mark.png"
+  },
+  "pay": [
+    { "label": "Pay over time", "note": "Split the price into payments at checkout.", "accent": true },
+    { "label": "Square &middot; Canada", "note": "Checkout in Canada runs through Square." },
+    { "label": "Stripe &middot; USA", "note": "Checkout in the USA runs through Stripe, with EV Productions as the registered merchant." }
+  ],
+  "wall_note": "Every piece is set up before it leaves. Drop D tuning on request. Prices confirmed in store.",
+  "wall": [
+    { "f": "guitar", "img": "blue_sg_dropd.webp", "name": "Surf Blue Drop D", "spec": "SG-style, 2 humbuckers, Drop D headstock", "price": "$500", "note": "new", "kind": "sg" },
+    { "f": "guitar", "img": "red_tstyle.webp", "name": "Red Drop D", "spec": "T-style, rosewood board, white pickguard", "price": "$300", "note": "new", "kind": "t" },
+    { "f": "guitar", "img": "gibson_lp_standard_dropd.webp", "name": "Gibson Les Paul Standard", "spec": "Resale, tobacco burst, Drop D custom pickups", "price": "Ask", "note": "resale", "kind": "lp" },
+    { "f": "guitar", "img": "black_singlecut_gold.webp", "name": "Drop D Single-Cut", "spec": "Black, 3 gold humbuckers", "price": "Ask", "note": "", "kind": "lp" },
+    { "f": "guitar", "img": "aiersi_tstyle_sunburst.webp", "name": "Aiersi T-Style", "spec": "3-tone sunburst, maple board", "price": "Ask", "note": "", "kind": "t" },
+    { "f": "guitar", "img": "aiersi_tstyle_butterscotch.webp", "name": "Aiersi T-Style", "spec": "Butterscotch, rosewood board", "price": "Ask", "note": "", "kind": "t" },
+    { "f": "guitar", "img": "epiphone_special_black.webp", "name": "Epiphone Les Paul Special", "spec": "Translucent black, 2 humbuckers", "price": "Ask", "note": "", "kind": "lp" },
+    { "f": "bass", "img": "aiersi_spalted_ubass.webp", "name": "Aiersi U-Bass", "spec": "Spalted maple, 4-string ukulele bass", "price": "Ask", "note": "", "kind": "ubass" }
+  ],
+  "parts": {
+    "summary": "Picks, strings, tuners, pickups and hardware, ordered through Dewey",
+    "tiles": [
+      { "title": "Consumables", "text": "Drop D picks and packs; guitar, bass and ukulele strings." },
+      { "title": "Hardware", "text": "Tuners, bridges, nuts and saddles." },
+      { "title": "Pickups and wiring", "text": "Pickups, pots, switches and jacks. Dewey fits them too." }
+    ]
+  },
+  "build": {
+    "bodies_label": "Body: Dewey's blanks on the bench now",
+    "bodies_note": "Other shapes (SG, T-style, offset) on request.",
+    "bodies": [
+      { "name": "S-style blank", "detail": "Mahogany &middot; HSS route", "note": "Mahogany, routed for two humbuckers and a single-coil.", "front": "body_s_b.webp", "back": "body_s_a.webp" },
+      { "name": "Single-cut blank", "detail": "Maple &middot; 2 humbucker routes", "note": "Maple, routed for two humbuckers.", "front": "body_sc_a.webp", "back": "body_sc_b.webp" }
+    ],
+    "tops": [
+      { "label": "Solid colour", "note": "Solid colour gloss, like the Surf Blue and the Red." },
+      { "label": "Spalted maple", "note": "Maple with dark zone lines from natural spalting." },
+      { "label": "Red cedar", "note": "Western red cedar, light and resonant." },
+      { "label": "Signature art", "note": "A Signature Series design." }
+    ]
+  },
+  "lessons": {
+    "text": "Guitar, bass and ukulele lessons in Kelowna.",
+    "services": [
+      { "title": "Setups", "text": "Action, intonation, relief, fresh strings and a polish." },
+      { "title": "Repairs", "text": "Frets, electronics, nut and saddle work. Quoted on the bench." },
+      { "title": "School clinics", "text": "Drop D brings instruments into the classroom." }
+    ]
+  },
+  "signature": {
+    "title": "Signature Series",
+    "summary": "Drop D bodies carrying a Gitxsan artist's design",
+    "text": "Three Drop D bodies are with the artist now. Each finished guitar carries his design; the guitars and the story appear here as he releases them."
+  },
+  "program": {
+    "title": "North Sessions",
+    "summary": "Touring music education, Kelowna to Prince Rupert, April 2027",
+    "stats": [
+      ["KEL&rarr;PR", "Kelowna to Prince Rupert"], ["APR 2027", "Year one"], ["5", "communities"], ["115", "students"], ["12", "program days"]
+    ]
+  },
+  "showcase": {
+    "summary": "Drop D instruments played on stage and on the shop floor",
+    "cards": [
+      { "label": "On stage", "img": "stage.jpg" },
+      { "label": "The shop at night (render)", "img": "hero.jpg" }
+    ]
+  },
+  "footer_links": ["dropdmusic.ca", "facebook.com/DropD2020", "@drop.d.music"],
+  "footer_note": "Free member vendor on ROADIE. Guitars shown are from the shop wall; stock and prices confirmed in store."
+}
