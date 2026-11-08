@@ -283,6 +283,30 @@ footer code{font:500 14px var(--mono);color:var(--t1);border:1px solid var(--lin
 .sheet b{color:var(--t1)}
 @container (max-width:620px){ .shop{grid-template-columns:1fr;overflow:auto} .fig{height:44cqh} }
 
+/* Turntable: the instrument turns on the pedestal (drag), sways when idle */
+.stage{perspective:1100px;touch-action:pan-y;cursor:grab}
+.stage.dragging{cursor:grabbing}
+.spin{position:relative;height:100%;display:flex;align-items:flex-end;justify-content:center;transform-style:preserve-3d}
+@media (prefers-reduced-motion:no-preference){ .stage:not(.dragging) .spin.idle{animation:sway 9s ease-in-out infinite} }
+@keyframes sway{0%,100%{transform:rotateY(-22deg)}50%{transform:rotateY(22deg)}}
+.fig{transform-style:preserve-3d;transition:transform .08s linear}
+.hint{position:absolute;left:12px;top:10px;z-index:2;font:600 12px var(--mono);letter-spacing:.1em;color:var(--t3);text-transform:uppercase}
+/* Blueprint = hologram */
+.stage.blueprint{background:radial-gradient(60% 45% at 50% 100%,rgba(70,190,255,.22),transparent 70%),#04101c;border:1px solid rgba(120,200,255,.3)}
+.stage.blueprint::after{content:"";position:absolute;left:-30%;right:-30%;bottom:-6%;height:46%;pointer-events:none;
+  background-image:linear-gradient(rgba(120,210,255,.35) 1px,transparent 1px),linear-gradient(90deg,rgba(120,210,255,.35) 1px,transparent 1px);background-size:44px 44px;
+  transform:perspective(500px) rotateX(68deg);transform-origin:50% 100%;-webkit-mask:linear-gradient(to top,#000 10%,transparent 85%);mask:linear-gradient(to top,#000 10%,transparent 85%)}
+.stage.blueprint .cone{position:absolute;left:50%;bottom:4%;width:56%;height:92%;transform:translateX(-50%);pointer-events:none;
+  background:linear-gradient(to top,rgba(90,210,255,.28),rgba(90,210,255,0) 80%);clip-path:polygon(38% 100%,62% 100%,100% 0,0 0);filter:blur(2px)}
+.stage.blueprint .ring{position:absolute;left:24%;right:24%;bottom:3%;height:6%;border-radius:50%;border:2px solid rgba(120,220,255,.9);box-shadow:0 0 24px rgba(90,210,255,.8),inset 0 0 18px rgba(90,210,255,.6)}
+.stage.pedestal .cone,.stage.pedestal .ring{display:none}
+.stage.blueprint .fig img{filter:grayscale(1) contrast(1.7) brightness(1.5) sepia(1) hue-rotate(160deg) saturate(3.2) drop-shadow(0 0 6px rgba(80,200,255,.95)) drop-shadow(0 0 22px rgba(80,200,255,.45));opacity:.86;mix-blend-mode:screen}
+.stage.blueprint .fig::after{content:"";position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(to bottom,rgba(140,230,255,.16) 0 1px,transparent 1px 4px);
+  -webkit-mask:var(--m) center/contain no-repeat;mask:var(--m) center/contain no-repeat}
+@media (prefers-reduced-motion:no-preference){ .stage.blueprint .fig{animation:flick 4s steps(1) infinite} }
+@keyframes flick{0%,100%{opacity:1}47%{opacity:.86}48%{opacity:1}73%{opacity:.92}74%{opacity:1}}
+.stage.blueprint::before{content:"HOLOGRAM \00B7  BUILD SHEET";color:rgba(160,230,255,.85)}
+
 /* Brand */
 .lockup{display:flex;align-items:center;gap:18px;margin:14px 0 4px}
 .lockup .mark{width:clamp(96px,14vw,138px);height:auto;flex:none;filter:drop-shadow(0 0 2px rgba(255,255,255,.4)) drop-shadow(0 0 18px rgba(255,45,85,.55))}
@@ -329,7 +353,7 @@ select.tsel{width:100%;background:rgba(0,0,0,.35);color:var(--t1);border:1px sol
 .a4 b{font:600 16px var(--mono);min-width:92px;text-align:center}
 input[type=range]{width:100%;accent-color:#FF2D55}
 .tmsg{font-size:14px;color:var(--t3);min-height:20px}
-.navtuner{margin-left:8px;font:600 13px var(--mono);letter-spacing:.06em;text-transform:uppercase;padding:6px 12px;border-radius:999px;border:1px solid var(--red);color:var(--t1);text-decoration:none;box-shadow:0 0 14px rgba(255,45,85,.2)}
+.navtuner{cursor:pointer;background:transparent;margin-left:8px;font:600 13px var(--mono);letter-spacing:.06em;text-transform:uppercase;padding:6px 12px;border-radius:999px;border:1px solid var(--red);color:var(--t1);text-decoration:none;box-shadow:0 0 14px rgba(255,45,85,.2)}
 @media (max-width:900px){ .tuner{grid-template-columns:1fr} }
 @media (max-width:520px){ .member{display:none} .navtuner{margin-left:auto} .crumb{font-size:14px} }
 
@@ -376,7 +400,7 @@ video.clip{width:100%;border-radius:14px;border:1px solid var(--line);background
   <a class="logo" href="/" style="text-decoration:none">ROADIE</a>
   <span class="crumb"><a href="/community" style="color:inherit;text-decoration:none">Vendors</a> &rsaquo; <b>{{NAME}}</b></span>
   <span class="member" data-note="{{MEMBER_NOTE}}"><i></i>{{MEMBER_LABEL}}</span>
-  <a class="navtuner trace" href="#tuner" data-open="tuner" data-note="Tune a guitar, bass or ukulele, or find your key.">Tuner</a>
+  <button type="button" class="navtuner trace" id="navtuner" data-note="Tune a guitar, bass or ukulele, or find your key.">Tuner</button>
 </div></header>
 
 <section class="hero"><div class="wrap">
@@ -529,9 +553,10 @@ $("#grid").innerHTML=WALL.map(card).join("");
 
 /* Pop-up */
 let lastFocus=null;
-function openPop(title,html){ lastFocus=document.activeElement; $("#ptitle").textContent=title; $("#pbody").innerHTML=html; $("#pbody").className="pbody"+(html.indexOf('class="shop"')>=0?" asshop":""); $("#scrim").hidden=false; $("#px").focus(); }
-function closePop(){ const tb=$("#tunerbox"); if(tb && tb.parentElement.id!=="tunerhome") $("#tunerhome").appendChild(tb);
-  $(".pop").classList.remove("sheet"); $("#scrim").classList.remove("forsheet"); $("#scrim").hidden=true; if(lastFocus) lastFocus.focus(); }
+function openPop(title,html){ lastFocus=document.activeElement; if(typeof stopAll==="function") stopAll(); $("#ptitle").textContent=title; $("#pbody").innerHTML=html; $("#pbody").className="pbody"+(html.indexOf('class="shop"')>=0?" asshop":""); $("#scrim").hidden=false; $("#px").focus({preventScroll:true}); }
+function closePop(){ const tb=$("#tunerbox"); if(tb && $("#tunerhome") && tb.parentElement.id!=="tunerhome"){ $("#tunerhome").appendChild(tb); stopAll(); }
+  $(".pop").classList.remove("sheet"); $("#scrim").classList.remove("forsheet"); $("#scrim").hidden=true;
+  window.scrollTo({top:0,behavior:"smooth"}); if(lastFocus) lastFocus.focus({preventScroll:true}); }
 const esc=t=>String(t).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 /* Every request (quote, build sheet, lesson, parts, ask to buy) goes to the vendor through ROADIE. */
 function ask(kind,title,summary){
@@ -548,6 +573,7 @@ function ask(kind,title,summary){
       $("#reqok").hidden=false; $("#reqok").textContent=`Sent. ${V.owner} will get back to you.`; $("#reqerr").hidden=true; e.target.querySelector("button[type=submit]").disabled=true; }
     catch(err){ $("#reqerr").hidden=false; $("#reqerr").textContent=err.message+". Please try again."; } });
 }
+function openTuner(btn){ lit(btn); openPop("Tuner",""); $(".pop").classList.add("sheet"); $("#scrim").classList.add("forsheet"); $("#pbody").appendChild($("#tunerbox")); }
 $("#px").addEventListener("click",closePop);
 $("#scrim").addEventListener("click",e=>{ if(e.target.id==="scrim") closePop(); });
 document.addEventListener("keydown",e=>{ if(e.key==="Escape" && !$("#scrim").hidden) closePop(); });
@@ -558,7 +584,7 @@ const PARTS={
   frets:["Frets and neck",["Keep","Level, crown and polish","Stainless refret"]],
   pu_neck:["Neck pickup",["Keep","Humbucker","Single-coil","P-90"]], pu_bridge:["Bridge pickup",["Keep","Humbucker","Single-coil","P-90"]],
   bridge:["Bridge and saddles",["Keep","Compensated saddles","Upgraded bridge"]], controls:["Controls and wiring",["Keep","Coil split","Push-pull, series/parallel","New pots and switch"]],
-  jack:["Output jack",["Keep","Heavy-duty jack"]], finish:["Body finish",["Keep","Refinish, solid colour","Signature Series art"]],
+  jack:["Output jack",["Keep","Heavy-duty jack"]], finish:["Body finish",["Keep","Refinish, solid colour","Refinish, natural","Trevor Angus art (quote)"]],
   guard:["Pickguard",["Keep","New colour","Remove"]], setup:["Setup",["Standard setup","Drop D setup","Open tuning setup"]],
   piezo:["Pickup (under-saddle)",["Keep","Upgrade preamp"]], top:["Top and binding",["Keep","Refinish"]]
 };
@@ -571,8 +597,8 @@ const KINDS={
 let chosen={}, CUR=0;
 function shopHTML(g){
   const spots=KINDS[g.kind]||KINDS.lp;
-  return `<div class="shop"><div class="stage pedestal" id="stage"><div class="fig"><img src="${g.img}" alt="${g.name}">
-      ${spots.map(([k,x,y],i)=>`<button type="button" class="hot trace" style="left:${x}%;top:${y}%" data-k="${k}" data-note="${PARTS[k][0]}">${i+1}</button>`).join("")}</div></div>
+  return `<div class="shop"><div class="stage pedestal" id="stage"><span class="hint">Drag to turn</span><span class="cone"></span><span class="ring"></span><div class="spin idle" id="spin"><div class="fig" id="fig" style="--m:url('${g.img}')"><img src="${g.img}" alt="${g.name}" draggable="false">
+      ${spots.map(([k,x,y],i)=>`<button type="button" class="hot trace" style="left:${x}%;top:${y}%" data-k="${k}" data-note="${PARTS[k][0]}">${i+1}</button>`).join("")}</div></div></div>
     <div class="side">
       <div class="modes" role="group" aria-label="View"><button type="button" class="pill trace" aria-pressed="true" data-mode="pedestal">Showroom</button><button type="button" class="pill trace" aria-pressed="false" data-mode="blueprint">Blueprint</button>
         <span class="mono" style="margin-left:auto;align-self:center;font-size:18px">${g.price}</span></div>
@@ -604,6 +630,16 @@ $("#pbody").addEventListener("click",ev=>{
     const g=WALL[CUR]; ask("build_sheet","Build sheet: "+g.name, g.name+" ("+g.price+"). "+Object.entries(chosen).map(([k,v])=>PARTS[k][0]+": "+v).join("; ")); }
   if(ev.target.id==="buyit"){ lit(ev.target); const g=WALL[CUR]; ask("buy","Ask to buy: "+g.name, g.name+", "+g.spec+" ("+g.price+")."); }
 });
+/* Turntable drag: rotateY follows the pointer, clamped so the photo never shows edge-on */
+let drag=null;
+$("#pbody").addEventListener("pointerdown",ev=>{ const st=ev.target.closest("#stage"); if(!st||ev.target.closest(".hot")) return;
+  const spin=$("#spin"); const cur=getComputedStyle(spin).transform; spin.classList.remove("idle");
+  let start=0; if(cur&&cur!=="none"){ const m=new DOMMatrix(cur); start=Math.atan2(-m.m13,m.m11)*180/Math.PI; }
+  spin.style.transform=`rotateY(${start}deg)`; drag={x:ev.clientX,start,el:spin}; st.classList.add("dragging"); st.setPointerCapture(ev.pointerId); });
+$("#pbody").addEventListener("pointermove",ev=>{ if(!drag) return; const a=Math.max(-70,Math.min(70,drag.start+(ev.clientX-drag.x)*0.45)); drag.el.style.transform=`rotateY(${a}deg)`; drag.a=a; });
+const endDrag=()=>{ if(!drag) return; const st=$("#stage"); if(st) st.classList.remove("dragging"); const el=drag.el; drag=null;
+  setTimeout(()=>{ if(!drag&&el.isConnected){ el.style.transition="transform .9s ease"; el.style.transform="rotateY(0deg)"; setTimeout(()=>{ el.style.transition=""; el.style.transform=""; el.classList.add("idle"); },950); } },2500); };
+$("#pbody").addEventListener("pointerup",endDrag); $("#pbody").addEventListener("pointercancel",endDrag);
 $("#pbody").addEventListener("change",ev=>{
   const k=ev.target.dataset.k; if(!k) return;
   if(ev.target.type==="checkbox") syncPart(k, ev.target.checked);
@@ -718,9 +754,12 @@ $("#micbtn").addEventListener("click",async e=>{ lit(e.currentTarget); stopAll()
   catch(err){ $("#tmsg").textContent="The microphone isn't available in this preview. It works on the live ROADIE page; tap a string to see the needle with the demo tone."; } });
 $("#stopbtn").addEventListener("click",e=>{ lit(e.currentTarget); stopAll(); $("#tmsg").textContent="Stopped."; });
 
-/* Phone tuner: the tuner opens in a bottom sheet from the round button */
+/* Tuner opens as a sheet from the top bar on every screen */
 $("#tunerbox").parentElement.id="tunerhome";
-$("#fab").addEventListener("click",e=>{ lit(e.currentTarget); openPop("Tuner",""); $(".pop").classList.add("sheet"); $("#scrim").classList.add("forsheet"); $("#pbody").appendChild($("#tunerbox")); });
+$("#navtuner").addEventListener("click",e=>openTuner(e.currentTarget));
+
+/* Phone tuner: the tuner opens in a bottom sheet from the round button */
+$("#fab").addEventListener("click",e=>openTuner(e.currentTarget));
 
 /* Hover notes */
 const note=$("#note");

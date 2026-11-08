@@ -41,7 +41,7 @@ export default function VendorCapture({ slug, name, capKey }: { slug: string; na
           <input type="file" accept="video/*" className="hidden" disabled={busy}
             onChange={e => { const f = e.target.files?.[0]; if (f) upload(f, f.name); e.target.value = ""; }} />
         </label>
-        <a className="btn" href={`/vendors/${slug}`}>Open my page</a>
+        <a className="btn" href={`/vendors/${slug}`}>Done, back to my page</a>
       </div>
       {msg && <div className="text-sm">{msg}</div>}
       {sent.length > 0 && <div className="grid gap-3 sm:grid-cols-2">{sent.map(u => <video key={u} src={u} controls playsInline className="w-full rounded-lg" />)}</div>}
