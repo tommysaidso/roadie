@@ -7,8 +7,11 @@ export const dynamic="force-dynamic";
 const RANK = "CASE member_status WHEN 'lifetime_free' THEN 0 WHEN 'member' THEN 1 ELSE 2 END";
 export async function GET(req:NextRequest){
   const tag=req.nextUrl.searchParams.get("tag");
-  const rows= tag? all("SELECT * FROM pros WHERE (','||lower(replace(tags,' ',''))||',') LIKE ? ORDER BY "+RANK+", name", `%,${tag},%`)
-                 : all("SELECT * FROM pros ORDER BY "+RANK+", name");
+  // Public listing fields only. The onboarding token is a private edit key and
+  // phone/street address stay off the open feed (it was SELECT *, which served all three).
+  const COLS = "id,name,headline,kind,tags,city,region,country,remote,bio,links,member_status,hours,website,year_est,services";
+  const rows= tag? all(`SELECT ${COLS} FROM pros WHERE (','||lower(replace(tags,' ',''))||',') LIKE ? ORDER BY `+RANK+", name", `%,${tag},%`)
+                 : all(`SELECT ${COLS} FROM pros ORDER BY `+RANK+", name");
   return NextResponse.json({ pros: rows });
 }
 export async function POST(req:NextRequest){
